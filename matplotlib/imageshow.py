@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.image import imread
 
 # 读入图片
-img = imread('cat.jpeg')
+img = imread('../data/cat.jpeg')
 plt.imshow(img)
 
 plt.show()
