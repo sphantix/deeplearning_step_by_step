@@ -17,3 +17,10 @@ y = [0.1, 0.05, 0.6, 0.0, 0.05, 0.1, 0.0, 0.1, 0.0, 0.0]
 print("正确标签值：{0}".format(t))
 print("输出值：{0}".format(y))
 print("均方误差：{0}".format(mean_squared_error(np.array(y), np.array(t))))
+
+print("\n*****************************************\n")
+
+y = [0.1, 0.05, 0.1, 0.0, 0.05, 0.1, 0.0, 0.6, 0.0, 0.0]
+print("正确标签值：{0}".format(t))
+print("输出值：{0}".format(y))
+print("均方误差：{0}".format(mean_squared_error(np.array(y), np.array(t))))
