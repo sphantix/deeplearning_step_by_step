@@ -5,6 +5,8 @@
 # Mail: sphantix@gmail.cn
 # created time: Tue 19 Feb 2019 11:49:03 AM CST
 
+import numpy as np
+
 def numerical_diff_gradient(f, x):
     h = 1e-4 # 0.0001
     grad = np.zeros_like(x)
