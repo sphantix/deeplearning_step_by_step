@@ -6,7 +6,7 @@
 # created time: Mon 18 Feb 2019 09:26:00 PM CST
 
 import numpy as np
-from activation_functions import softmax
+from common.activation_functions import softmax
 
 # mean squared error
 def mean_squared_error(y, t):

@@ -5,36 +5,52 @@
 # Mail: sphantix@gmail.cn
 # created time: Wed 16 Jan 2019 12:39:51 PM CST
 
+import sys, os
 import numpy as np
-from activation_functions import sigmoid
-from activation_functions import identity
+import matplotlib.pyplot as plt
+sys.path.append(os.pardir)
+from mnist.mnist import load_mnist
+from two_layer_net import TwoLayerNet
 
-def init_network():
-    network = {}
-    network['W1'] = np.array([[0.1, 0.3, 0.5], [0.2, 0.4, 0.6]])
-    network['b1'] = np.array([0.1, 0.2, 0.3])
-    network['W2'] = np.array([[0.1, 0.4], [0.2, 0.5], [0.3, 0.6]])
-    network['b2'] = np.array([0.1, 0.2])
-    network['W3'] = np.array([[0.1, 0.3], [0.2, 0.4]])
-    network['b3'] = np.array([0.1, 0.2])
+(x_train, t_train), (x_test, t_test) = load_mnist(normalize=True, one_hot_label=True)
 
-    return network
+train_loss_list = []
 
-def forward(network, x):
-    W1, W2, W3 = network['W1'], network['W2'], network['W3']
-    b1, b2, b3 = network['b1'], network['b2'], network['b3']
+# 超参数
+iters_num = 10000
+train_size = x_train.shape[0]
+batch_size = 100
+learning_rate = 0.1
 
-    a1 = np.dot(x, W1) + b1
-    z1 = sigmoid(a1)
-    a2 = np.dot(z1, W2) + b2
-    z2 = sigmoid(a2)
-    a3 = np.dot(z2, W3) + b3
-    y = identity(a3)
+network = TwoLayerNet(input_size=784, hidden_size=50, output_size=10)
 
-    return y
+for i in range(iters_num):
+    # 获取mini-batch
+    batch_mask = np.random.choice(train_size, batch_size)
+    x_batch = x_train[batch_mask]
+    t_batch = t_train[batch_mask]
 
-network = init_network()
-x = np.array([1.0, 0.5])
-y = forward(network, x)
+    # 计算梯度
+    #grad = network.numerical_gradient(x_batch, t_batch)
+    grad = network.gradient(x_batch, t_batch)
 
-print(y)
+    # 更新参数
+    for key in ('W1', 'b1', 'W2', 'b2'):
+        network.params[key] -= learning_rate * grad[key]
+
+    # 记录学习过程
+    loss = network.loss(x_batch, t_batch)
+    train_loss_list.append(loss)
+    if (i%100 == 0):
+        print("iteration({0}: loss: {1})".format(i, loss))
+
+# 绘制图形
+x = np.arange(len(train_loss_list))
+
+plt.plot(x, train_loss_list)
+plt.xlabel("iteration")
+plt.ylabel("loss")
+plt.ylim(0, 3)
+plt.show()
+
+
