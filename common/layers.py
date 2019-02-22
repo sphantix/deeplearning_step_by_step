@@ -6,8 +6,8 @@
 # created time: Fri 22 Feb 2019 02:50:17 PM CST
 
 import numpy as np
-from activation_functions import softmax
-from loss_functions import cross_entropy_error
+from common.activation_functions import softmax
+from common.loss_functions import cross_entropy_error
 
 class ReLU(object):
     def __init__(self):
@@ -44,22 +44,22 @@ class Sigmoid(object):
 
 
 class Affine(object):
-    def __init__(self, w, b):
-        self.w = w
+    def __init__(self, W, b):
+        self.W = W
         self.b = b
         self.x = None
-        self.dw = None
+        self.dW = None
         self.db = None
 
     def forward(self, x):
         self.x = x
-        out = np.dot(x, self.w) + self.b
+        out = np.dot(x, self.W) + self.b
 
         return out
 
     def backward(self, dout):
-        dx = np.dot(dout, self.w.T)
-        self.dw = np.dot(self.x.T, dout)
+        dx = np.dot(dout, self.W.T)
+        self.dW = np.dot(self.x.T, dout)
         self.db = np.sum(dout, axis=0)
 
         return dx
@@ -76,7 +76,7 @@ class SoftmaxWithLoss(object):
         self.y = softmax(x)
         self.loss = cross_entropy_error(self.y, self.t)
 
-        return loss
+        return self.loss
 
     def backward(self, dout=1):
         batch_size = self.t.shape[0]
