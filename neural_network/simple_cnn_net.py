@@ -14,7 +14,7 @@ from common.layers import *
 from common.gradient_algorithms import numerical_diff_gradient
 
 
-class SimpleConvNet:
+class SimpleConvNet(object):
     """简单的ConvNet
 
     conv - relu - pool - affine - relu - affine - softmax

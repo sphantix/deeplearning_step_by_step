@@ -33,8 +33,8 @@ trainer = Trainer(network, x_train, t_train, x_test, t_test,
 trainer.train()
 
 # 保存参数
-# network.save_params("params.pkl")
-# print("Saved Network Parameters!")
+network.save_params("params.pkl")
+print("Saved Network Parameters!")
 
 # 绘制图形
 markers = {'train': 'o', 'test': 's'}
